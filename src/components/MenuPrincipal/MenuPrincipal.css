@@ -1,0 +1,101 @@
+.app-container {
+  max-width: 100%;
+  margin: 0;
+  min-height: 50vh;
+  padding: 0;
+}
+
+.menu-container {
+  text-align: center;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease;
+  background-color: #fe8300;
+}
+
+.titulo-menu {
+  color: #34495e;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.menu-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 3rem auto;
+  max-width: 1200px;
+}
+
+.menu-boton {
+  width: 50%;
+  position: relative;
+  left: 20rem;
+  background-color: #5d6d7e;
+  padding: 1.5rem;
+  font-size: 1.2rem;
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.menu-boton i {
+  font-size: 1.5rem;
+}
+
+
+.menu-boton.primario {
+  background-color: #3498db;
+  box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+}
+
+.menu-boton.secundario {
+  background-color: #2ecc71;
+  box-shadow: 0 4px 6px rgba(46, 204, 113, 0.3);
+}
+
+.menu-boton:hover {
+  
+  font-weight: bold;
+  background-color: #34495e;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-boton.primario:hover {
+  background-color: #2980b9;
+}
+
+.menu-boton.secundario:hover {
+  background-color: #27ae60;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Añade al final */
+@media (max-width: 600px) {
+  .menu-opciones {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .menu-boton {
+    left: 3rem;
+    top: 3rem;
+    width: 80%;
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+  
+  .titulo-menu {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+} 

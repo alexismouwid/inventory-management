@@ -1,0 +1,74 @@
+/* Estilos específicos para ListaVentas */
+.lista-containerVentas {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+.titulo-listaVentas {
+  color: #5f6a6a;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.grid-tarjetasVentas {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  height: 445px;
+}
+
+.imagen-productoVenta {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.estado-pago {
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.estado-pago.pagado {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-pago.pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.detalles-producto p {
+  margin: 5px 0;
+}
+
+.detalles-producto strong {
+  display: inline-block;
+  min-width: 120px;
+}
+
+/* Añade al final */
+@media (max-width: 900px) {
+  .grid-tarjetasVentas {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-tarjetasVentas{
+     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  
+  .tarjeta-productoVenta {
+height: 445px;
+    flex-direction: column;
+  }
+  
+  .imagen-productoVenta {
+    height: 100px;
+  }
+}
+
