@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './FormularioProducto.css';
 
@@ -6,15 +6,25 @@ const FormularioProducto = () => {
   const [nombre, setNombre] = useState('');
   const [precio, setPrecio] = useState('');
   const [cantidad, setCantidad] = useState('');
+  const [precioUnidad, setPrecioUnidad] = useState('');
   const [talla, setTalla] = useState('');
   const [color, setColor] = useState('');
   const [precioVenta, setPrecioVenta] = useState('');
   const [fechaCompra, setFechaCompra] = useState('');
   const [imagen, setImagen] = useState(null);
-
   const [preview, setPreview] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Calcular automáticamente el precio por unidad
+  useEffect(() => {
+    if (precio && cantidad && Number(cantidad) > 0) {
+      const calculado = (Number(precio) / Number(cantidad)).toFixed(2);
+      setPrecioUnidad(calculado);
+    } else {
+      setPrecioUnidad('');
+    }
+  }, [precio, cantidad]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -54,20 +64,26 @@ const FormularioProducto = () => {
       formData.append('nombre', nombre);
       formData.append('precio', precio);
       formData.append('cantidad', cantidad);
+      formData.append('precioUnidad', precioUnidad);
       formData.append('talla', talla);
       formData.append('color', color);
       formData.append('precioVenta', precioVenta);
       formData.append('fechaCompra', fechaCompra);
       formData.append('imagen', imagen);
 
-     await axios.post('https://back-inventory-mmanagement.onrender.com/api/productos/subir', formData, {
-  headers: { 'Content-Type': 'multipart/form-data' }
-});
- 
+      await axios.post(
+        'https://back-inventory-mmanagement.onrender.com/api/productos/subir',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+
       setMensaje('✅ Producto agregado correctamente');
       setNombre('');
       setPrecio('');
       setCantidad('');
+      setPrecioUnidad('');
       setTalla('');
       setColor('');
       setPrecioVenta('');
@@ -89,6 +105,17 @@ const FormularioProducto = () => {
         <input type="text" name="nombre" placeholder="Nombre" value={nombre} onChange={handleChange} required className="form-input" />
         <input type="number" name="precio" placeholder="Precio de compra" value={precio} onChange={handleChange} required className="form-input" />
         <input type="number" name="cantidad" placeholder="Cantidad" value={cantidad} onChange={handleChange} required className="form-input" />
+
+        {/* Input automático para precioUnidad */}
+        <input
+          type="number"
+          name="precioUnidad"
+          placeholder="Precio por unidad"
+          value={precioUnidad}
+          className="form-input"
+          readOnly // o disabled si prefieres que no lo pueda editar
+        />
+
         <input type="text" name="talla" placeholder="Talla" value={talla} onChange={handleChange} required className="form-input" />
         <input type="text" name="color" placeholder="Color" value={color} onChange={handleChange} required className="form-input" />
         <input type="number" name="precioVenta" placeholder="Precio de venta" value={precioVenta} onChange={handleChange} required className="form-input" />

@@ -81,7 +81,8 @@ const ListaProductos = ({ onVolver }) => {
             <div className="cuerpo-tarjeta">
               <h3>{producto.nombre}</h3>
               <div className="detalles-producto">
-                <p><span>Precio:</span> ${producto.precio?.toFixed(2) ?? '0.00'}</p>
+                <p><span>Precio total:</span> ${producto.precio?.toFixed(2) ?? '0.00'}</p>
+                 <p><span>Precio por unidad:</span> {producto.precioUnidad}</p>
                 <p><span>Cantidad:</span> {producto.cantidad}</p>
                 <p><span>Inversion:</span> ${producto.precio?.toFixed(1) * producto.cantidad ?? '0.00'}</p>
                 <p className="utilidad">
