@@ -23,10 +23,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ddd;
+  border: 1px solid orange;
   padding: 15px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #242424;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,6 +44,7 @@
 }
 
 .detalles-venta p {
+  color: #ddd;
   margin: 5px 0;
   font-size: 0.9rem;
 }
@@ -58,7 +59,7 @@
 }
 
 .boton-eliminar {
-  background-color: red;
+  background-color: orange;
   color: white;
   border: none;
   padding: 8px 16px;
