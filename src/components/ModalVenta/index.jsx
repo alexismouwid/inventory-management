@@ -6,16 +6,18 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
   const [formData, setFormData] = useState({
     cantidad: 1,
     nombreCliente: '',
-    pagado: true
+    precioVenta: producto.precioVenta,
+    pagado: true,
+
   });
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -30,11 +32,16 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
         throw new Error('Cantidad no válida');
       }
 
-      const response = await axios.post('http://localhost:5000/api/ventas', {
-        productoId: producto._id,
-        cantidadVendida: cantidad,
-        nombreCliente: formData.nombreCliente.trim(),
-        pagado: formData.pagado
+      const formDataToSend = new FormData();
+      formDataToSend.append('productoId', producto._id);
+      formDataToSend.append('cantidadVendida', cantidad);
+      formDataToSend.append('nombreCliente', formData.nombreCliente.trim());
+      formDataToSend.append('pagado', formData.pagado);
+      formDataToSend.append('imagenVenta', producto.imagenUrl);
+
+      // Enviar la venta al backend
+      await axios.post('http://localhost:5000/api/ventas', formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       setMensaje('✅ Venta registrada correctamente');
@@ -43,8 +50,10 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
         onClose();
       }, 1500);
     } catch (error) {
-      console.error('Error:', error);
-      setMensaje(error.response?.data?.mensaje || error.message || '❌ Error al registrar venta');
+      console.error('Error al registrar la venta:', error);
+      setMensaje(
+        error.response?.data?.mensaje || error.message || '❌ Error al registrar venta'
+      );
     } finally {
       setCargando(false);
     }
@@ -53,14 +62,10 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-contenido">
-        <button className="cerrar-modal" onClick={onClose}>Cerrar
-          <i className="fas fa-times"></i>
-        </button>
-        
-        <div className="modal-header">
-          <h3>Registrar Venta</h3>
-          <p className="producto-nombre">{producto.nombre}</p>
-        </div>
+        <button className="cerrar-modal" onClick={onClose}>Cerrar</button>
+
+        <h3>Registrar Venta</h3>
+        <p className="producto-nombre">{producto.nombre}</p>
 
         <div className="modal-info">
           <div className="info-item">
@@ -79,10 +84,9 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
 
         <form onSubmit={handleSubmit} className="formulario-venta">
           <div className="form-group">
-            <label htmlFor="cantidad">Cantidad a vender</label>
+            <label>Cantidad a vender</label>
             <input
               type="number"
-              id="cantidad"
               name="cantidad"
               min="1"
               max={producto.cantidad}
@@ -93,10 +97,9 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="nombreCliente">Nombre del cliente</label>
+            <label>Nombre del cliente</label>
             <input
               type="text"
-              id="nombreCliente"
               name="nombreCliente"
               value={formData.nombreCliente}
               onChange={handleChange}
@@ -112,21 +115,12 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
                 checked={formData.pagado}
                 onChange={handleChange}
               />
-              <span className="checkmark"></span>
               Pago realizado
             </label>
           </div>
 
           <button type="submit" disabled={cargando} className="boton-confirmar">
-            {cargando ? (
-              <>
-                <i className="fas fa-spinner fa-spin"></i> Procesando...
-              </>
-            ) : (
-              <>
-                <i className="fas fa-check-circle"></i> Confirmar Venta
-              </>
-            )}
+            {cargando ? 'Procesando...' : 'Confirmar Venta'}
           </button>
         </form>
 
@@ -141,3 +135,4 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
 };
 
 export default ModalVenta;
+

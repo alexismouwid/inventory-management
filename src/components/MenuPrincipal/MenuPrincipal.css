@@ -1,101 +1,89 @@
 .app-container {
-  max-width: 100%;
-  margin: 0;
-  min-height: 50vh;
-  padding: 0;
-}
-
-.menu-container {
-  text-align: center;
-  padding: 1rem;
-  animation: fadeIn 0.5s ease;
-  background-color: #fe8300;
-}
-
-.titulo-menu {
-  color: #34495e;
-  margin-bottom: 1rem;
-  font-size: 2rem;
-}
-
-.menu-opciones {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin: 3rem auto;
-  max-width: 1200px;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  flex-direction: row;
+}
+
+/* Menú lateral */
+.menu-lateral {
+  border: 1px solid #ff9333;
+  border-radius: 12px;
+  width: 30%;
+  max-width: 250px;
+  background-color: #242424;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu-boton {
-  width: 50%;
+  display: block;
   position: relative;
-  left: 20rem;
-  background-color: #5d6d7e;
-  padding: 1.5rem;
-  font-size: 1.2rem;
-  color: #fff;
-  border-radius: 50px;
+  top: 8rem;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #ff9333;
+  color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.menu-boton i {
-  font-size: 1.5rem;
-}
-
-
-.menu-boton.primario {
-  background-color: #3498db;
-  box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
-}
-
-.menu-boton.secundario {
-  background-color: #2ecc71;
-  box-shadow: 0 4px 6px rgba(46, 204, 113, 0.3);
+  transition: background-color 0.2s;
 }
 
 .menu-boton:hover {
-  
-  font-weight: bold;
-  background-color: #34495e;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: #ef7101;
 }
 
-.menu-boton.primario:hover {
-  background-color: #2980b9;
+/* Contenido principal */
+.contenido-principal {
+  border-radius: 12px;
+  width: 100%;
+  border: 1px solid #ff9333;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-.menu-boton.secundario:hover {
-  background-color: #27ae60;
-}
+/* ------------------------ */
+/* RESPONSIVE ADAPTATIONS  */
+/* ------------------------ */
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Añade al final */
-@media (max-width: 600px) {
-  .menu-opciones {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
   }
-  
+
+  .menu-lateral {
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
   .menu-boton {
-    left: 3rem;
-    top: 3rem;
-    width: 80%;
-    padding: 1.2rem;
-    font-size: 1rem;
+    position: static;
+    width: auto;
+    min-width: 120px;
+    margin-bottom: 10px;
+    flex: 1 1 40%;
   }
-  
-  .titulo-menu {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+
+  .contenido-principal {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    padding: 15px;
   }
-} 
+}
+

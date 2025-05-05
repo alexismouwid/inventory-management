@@ -1,74 +1,148 @@
-/* Estilos específicos para ListaVentas */
-.lista-containerVentas {
-  max-width: 100%;
+/* Estilo general para las tarjetas */
+.lista-container {
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  animation: fadeIn 0.5s ease;
-}
-.titulo-listaVentas {
-  color: #5f6a6a;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.grid-tarjetasVentas {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
-  height: 445px;
 }
 
-.imagen-productoVenta {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+.titulo-listaVentas {
+  color: #ddd;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
+
+.grid-tarjetasVentas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Estilo de las tarjetas individuales */
+.tarjeta-venta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-venta {
+  width: 100%;
+  max-width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.cuerpo-tarjeta {
+  text-align: center;
+}
+
+.detalles-venta p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
 .estado-pago {
   font-weight: bold;
-  padding: 3px 8px;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.estado-pago.pagado {
-  background-color: #d4edda;
-  color: #155724;
+  color: green;
 }
 
 .estado-pago.pendiente {
-  background-color: #fff3cd;
-  color: #856404;
+  color: red;
 }
 
-.detalles-producto p {
-  margin: 5px 0;
+.boton-eliminar {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.detalles-producto strong {
-  display: inline-block;
-  min-width: 120px;
+.boton-eliminar:hover {
+  background-color: darkred;
 }
 
-/* Añade al final */
-@media (max-width: 900px) {
+/* Botón Volver */
+.boton-volver {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.boton-volver:hover {
+  background-color: #0056b3;
+}
+
+.cargando, .error {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #d9534f;
+}
+
+/* Consultas de medios para pantallas pequeñas */
+@media (max-width: 768px) {
+  .titulo-listaVentas {
+    color: white;
+    font-size: 1.5rem;
+  }
+
   .grid-tarjetasVentas {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .tarjeta-venta {
+    padding: 10px;
+  }
+
+  .imagen-venta {
+    max-width: 120px;
+    height: 120px;
+  }
+
+  .detalles-venta p {
+    font-size: 0.8rem;
+  }
+
+  .boton-eliminar {
+    padding: 6px 12px;
   }
 }
 
-@media (max-width: 600px) {
-  .grid-tarjetasVentas{
-     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+@media (max-width: 480px) {
+  .titulo-listaVentas {
+    font-size: 1.2rem;
   }
 
-  
-  .tarjeta-productoVenta {
-height: 445px;
-    flex-direction: column;
+  .grid-tarjetasVentas {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
-  
-  .imagen-productoVenta {
+
+  .imagen-venta {
+    max-width: 100px;
     height: 100px;
+  }
+
+  .detalles-venta p {
+    font-size: 0.75rem;
+  }
+
+  .boton-eliminar {
+    padding: 5px 10px;
   }
 }
 

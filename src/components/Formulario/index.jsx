@@ -1,209 +1,116 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './formulario.css';
+import './FormularioProducto.css';
 
-const Formulario = ({ onVolver }) => {
-  const [formData, setFormData] = useState({
-    nombre: '',
-    precio: '',
-    cantidad: '',
-    talla: '',
-    color: '',
-    precioVenta: '',
-    fechaCompra: '',
-    imagen: null
-  });
+const FormularioProducto = () => {
+  const [nombre, setNombre] = useState('');
+  const [precio, setPrecio] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [talla, setTalla] = useState('');
+  const [color, setColor] = useState('');
+  const [precioVenta, setPrecioVenta] = useState('');
+  const [fechaCompra, setFechaCompra] = useState('');
+  const [imagen, setImagen] = useState(null);
+
   const [preview, setPreview] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+    const { name, value, type, files } = e.target;
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData(prev => ({ ...prev, imagen: file }));
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result);
-      reader.readAsDataURL(file);
+    if (type === 'file') {
+      const archivo = files[0];
+      setImagen(archivo);
+
+      if (archivo) {
+        const reader = new FileReader();
+        reader.onloadend = () => setPreview(reader.result);
+        reader.readAsDataURL(archivo);
+      } else {
+        setPreview('');
+      }
+    } else {
+      switch (name) {
+        case 'nombre': setNombre(value); break;
+        case 'precio': setPrecio(value); break;
+        case 'cantidad': setCantidad(value); break;
+        case 'talla': setTalla(value); break;
+        case 'color': setColor(value); break;
+        case 'precioVenta': setPrecioVenta(value); break;
+        case 'fechaCompra': setFechaCompra(value); break;
+        default: break;
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    try {
-      const data = new FormData();
-      data.append('nombre', formData.nombre);
-      data.append('precio', formData.precio);
-      data.append('cantidad', formData.cantidad);
-      data.append('talla', formData.talla);
-      data.append('color', formData.color);
-      data.append('precioVenta', formData.precioVenta);
-      data.append('fechaCompra', formData.fechaCompra);
-      data.append('imagen', formData.imagen);
+    setMensaje('');
 
-      await axios.post('http://localhost:5000/api/subir', data, {
+    try {
+      const formData = new FormData();
+      formData.append('nombre', nombre);
+      formData.append('precio', precio);
+      formData.append('cantidad', cantidad);
+      formData.append('talla', talla);
+      formData.append('color', color);
+      formData.append('precioVenta', precioVenta);
+      formData.append('fechaCompra', fechaCompra);
+      formData.append('imagen', imagen);
+
+      await axios.post('http://localhost:5000/api/subir', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
       setMensaje('✅ Producto agregado correctamente');
-      setFormData({
-        nombre: '',
-        precio: '',
-        cantidad: '',
-        talla: '',
-        color: '',
-        precioVenta: '',
-        fechaCompra: '',
-        imagen: null
-      });
+      setNombre('');
+      setPrecio('');
+      setCantidad('');
+      setTalla('');
+      setColor('');
+      setPrecioVenta('');
+      setFechaCompra('');
+      setImagen(null);
       setPreview('');
     } catch (error) {
-      setMensaje(error.response?.data?.mensaje || '❌ Error al agregar producto');
+      console.error('Error al enviar:', error);
+      setMensaje('❌ Error al guardar producto');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="formulario-container">
-      <button onClick={onVolver} className="boton-volver">
-        <i className="fas fa-arrow-left"></i> Volver al Menú
+    <form className="formulario-producto" onSubmit={handleSubmit} encType="multipart/form-data">
+      <h2 className="form-titulo">Agregar Producto</h2>
+      <div className="form-grid">
+        <input type="text" name="nombre" placeholder="Nombre" value={nombre} onChange={handleChange} required className="form-input" />
+        <input type="number" name="precio" placeholder="Precio de compra" value={precio} onChange={handleChange} required className="form-input" />
+        <input type="number" name="cantidad" placeholder="Cantidad" value={cantidad} onChange={handleChange} required className="form-input" />
+        <input type="text" name="talla" placeholder="Talla" value={talla} onChange={handleChange} required className="form-input" />
+        <input type="text" name="color" placeholder="Color" value={color} onChange={handleChange} required className="form-input" />
+        <input type="number" name="precioVenta" placeholder="Precio de venta" value={precioVenta} onChange={handleChange} required className="form-input" />
+        <input type="date" name="fechaCompra" value={fechaCompra} onChange={handleChange} required className="form-input" />
+        <input type="file" name="imagen" accept="image/*" onChange={handleChange} required className="form-input" />
+      </div>
+
+      {preview && (
+        <div className="imagen-preview">
+          <p>Vista previa:</p>
+          <img src={preview} alt="Vista previa" />
+        </div>
+      )}
+
+      <button type="submit" disabled={isLoading} className="guardar">
+        {isLoading ? 'Enviando...' : 'Guardar producto'}
       </button>
 
-      <h2 className="titulo-formulario">Agregar Nuevo Producto</h2>
-      
-      <form onSubmit={handleSubmit} className="formulario">
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre del Producto:</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="precio">Precio de Compra:</label>
-            <input
-              type="number"
-              id="precio"
-              name="precio"
-              value={formData.precio}
-              onChange={handleChange}
-              min="0"
-              step="0.01"
-              required
-            />
-          </div>
-            <div className="form-group">
-            <label htmlFor="cantidad">Cantidad:</label>
-            <input
-              type="number"
-              id="cantidad"
-              name="cantidad"
-              value={formData.cantidad}
-              onChange={handleChange}
-              min="1"
-              required
-            />
-          </div>
-        </div>
-        <div className="form-row"> 
-<div className="form-group">
-          <label htmlFor="nombre">Talla:</label>
-          <input
-            type="text"
-            id="talla"
-            name="talla"
-            value={formData.talla}
-            onChange={handleChange}
-            required
-          />
-        </div>
-<div className="form-group">
-          <label htmlFor="nombre">Color:</label>
-          <input
-            type="text"
-            id="color"
-            name="color"
-            value={formData.color}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        </div>
-
-        <div className="form-row"> 
-
-<div className="form-group">
-          <label htmlFor="precioVenta">Precio de Venta:</label>
-          <input
-            type="number"
-            id="precioVenta"
-            name="precioVenta"
-            value={formData.precioVenta}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="fechaCompra">Fecha de Compra:</label>
-          <input
-            type="date"
-            id="fechaCompra"
-            name="fechaCompra"
-            value={formData.fechaCompra}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-
-
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="imagen">Imagen del Producto:</label>
-          <input
-            type="file"
-            id="imagen"
-            name="imagen"
-            accept="image/*"
-            onChange={handleImageChange}
-            required
-          />
-          {preview && (
-            <div className="image-preview">
-              <img src={preview} alt="Vista previa" />
-            </div>
-          )}
-        </div>
-
-        <button type="submit" disabled={isLoading} className="boton-enviar">
-          {isLoading ? 'Guardando...' : 'Guardar Producto'}
-        </button>
-
-        {mensaje && (
-          <div className={`mensaje ${mensaje.includes('✅') ? 'exito' : 'error'}`}>
-            {mensaje}
-          </div>
-        )}
-      </form>
-    </div>
+      {mensaje && <p className="form-mensaje">{mensaje}</p>}
+    </form>
   );
 };
 
-export default Formulario;
+export default FormularioProducto;
+

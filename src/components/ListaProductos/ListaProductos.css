@@ -5,7 +5,7 @@
 }
 
 .titulo-lista {
-  color:#5f6a6a;
+  color: #ddd;
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -41,7 +41,7 @@
 }
 
 .tarjeta-producto {
-  background-color: white;
+  background-color: transparent;
   color: white;
   border-radius: 10px;
   overflow: hidden;
@@ -71,7 +71,7 @@
 
 .cuerpo-tarjeta h3 {
   margin: 0 0 1rem 0;
-  color: black;
+  color: #ddd ;
   font-size: 1.25rem;
 }
 
@@ -83,14 +83,14 @@
 .detalles-producto p {
   margin: 0.5rem 0;
   font-size: 0.9rem; 
-  color:  black;
+  color:  #ddd;
   display: flex;
   justify-content: space-between;
 }
 
 .detalles-producto span:first-child {
   font-weight: 500;
-  color: black;
+  color: #ddd;
 }
 
 .utilidad .positiva {

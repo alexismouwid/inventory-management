@@ -45,9 +45,7 @@ const ListaProductos = ({ onVolver }) => {
 
   if (cargando) return (
     <div className="lista-container">
-      <button onClick={onVolver} className="boton-volver">
-        <i className="fas fa-arrow-left"></i> Volver al Menú
-      </button>
+     
       <div className="cargando">Cargando productos...</div>
     </div>
   );
@@ -63,33 +61,34 @@ const ListaProductos = ({ onVolver }) => {
 
   return (
     <div className="lista-container">
-      <button onClick={onVolver} className="boton-volver">
-        <i className="fas fa-arrow-left"></i> Volver al Menú
-      </button>
+    
 
       <h2 className="titulo-lista">Inventario de Productos</h2>
       
       <div className="grid-tarjetas">
         {productos.map((producto) => (
           <div key={producto._id} className="tarjeta-producto">
-            {producto.imagenUrl && (
-              <img 
-                src={`http://localhost:5000${producto.imagenUrl}`} 
-                alt={producto.nombre} 
-                className="imagen-producto"
-              />
-            )}
+          
+           <img 
+  src={`http://localhost:5000/api/productos/${producto._id}/imagen`} 
+  alt={producto.nombre} 
+  className="imagen-producto"
+             onError={(e) => {
+               e.target.style.display = 'none';
+             }}
+/>
+           
             <div className="cuerpo-tarjeta">
               <h3>{producto.nombre}</h3>
               <div className="detalles-producto">
                 <p><span>Precio:</span> ${producto.precio?.toFixed(2) ?? '0.00'}</p>
                 <p><span>Cantidad:</span> {producto.cantidad}</p>
-                <p><span>Inversion:</span> ${producto.precioVenta?.toFixed(2) ?? '0.00'}</p>
+                <p><span>Inversion:</span> ${producto.precio?.toFixed(1) * producto.cantidad ?? '0.00'}</p>
                 <p className="utilidad">
                   <span>Utilidad:</span> 
                   <span 
                     className={(producto.precioVenta ?? 0) >= (producto.precio ?? 0) ? 'positiva' : 'negativa'}>
-                    ${((producto.precioVenta - producto.precio) * producto.cantidad).toFixed(2)}
+                    ${((producto.precioVenta - producto.precio) * producto.cantidad).toFixed(1)}
                   </span>
                 </p>
               </div>

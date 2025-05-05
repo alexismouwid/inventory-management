@@ -2,7 +2,7 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #fff;
+  background-color: #242424;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   font-family: 'Segoe UI', sans-serif;
@@ -12,7 +12,7 @@
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  color: #333;
+  color: #ddd;
 }
 
 .form-grid {
@@ -24,7 +24,7 @@
 .form-input {
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid white;
   border-radius: 8px;
   transition: border-color 0.3s ease;
   width: 100%;
@@ -32,14 +32,14 @@
 }
 
 .form-input:focus {
-  border-color: #1976d2;
+  border-color: #ef5f01;
   outline: none;
 }
 
-.form-boton {
+.guardar {
   width: 100%;
   padding: 0.75rem;
-  background-color: #1976d2;
+  background-color: #ef7101;
   color: white;
   border: none;
   border-radius: 8px;
@@ -49,8 +49,8 @@
   transition: background-color 0.3s;
 }
 
-.form-boton:hover {
-  background-color: #1259b0;
+.guardar:hover {
+  background-color: #ef5f01;
 }
 
 .form-mensaje {

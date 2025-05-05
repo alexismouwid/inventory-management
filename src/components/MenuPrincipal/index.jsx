@@ -6,60 +6,36 @@ import Tabla from '../Tabla';
 import './MenuPrincipal.css';
 
 const MenuPrincipal = () => {
-  const [vistaActual, setVistaActual] = useState('menu');
-  const [tipoTabla, setTipoTabla] = useState(null); // 'productos' o 'ventas'
+  const [vistaActual, setVistaActual] = useState(''); // Empieza sin vista
+  const [tipoTabla, setTipoTabla] = useState(null);
 
   const renderVista = () => {
     switch (vistaActual) {
       case 'formulario':
-        return <Formulario onVolver={() => setVistaActual('menu')} />;
+        return <Formulario />;
       case 'productos':
-        return <ListaProductos onVolver={() => setVistaActual('menu')} />;
+        return <ListaProductos />;
       case 'ventas':
-        return <ListaVentas onVolver={() => setVistaActual('menu')} />;
+        return <ListaVentas />;
       case 'tabla':
-        return <Tabla tipo={tipoTabla} onVolver={() => setVistaActual('menu')} />;
+        return <Tabla tipo={tipoTabla} />;
       default:
-        return (
-          <div className="menu-container">
-            <h1 className="titulo-menu">Sistema de Gestión de Productos</h1>
-            <div className="menu-opciones">
-              <button onClick={() => setVistaActual('formulario')} className="menu-boton">
-                Agregar Nuevo Producto
-              </button>
-              <button onClick={() => setVistaActual('productos')} className="menu-boton">
-                Ver Inventario
-              </button>
-              <button onClick={() => setVistaActual('ventas')} className="menu-boton">
-                Mis ventas
-              </button>
-              <button 
-                onClick={() => {
-                  setTipoTabla('productos');
-                  setVistaActual('tabla');
-                }} 
-                className="menu-boton"
-              >
-                Tabla de Productos
-              </button>
-              <button 
-                onClick={() => {
-                  setTipoTabla('ventas');
-                  setVistaActual('tabla');
-                }} 
-                className="menu-boton"
-              >
-                Tabla de Ventas
-              </button>
-            </div>
-          </div>
-        );
+        return <div>Selecciona una opción del menú</div>;
     }
   };
 
   return (
     <div className="app-container">
-      {renderVista()}
+      <div className="menu-lateral">
+        <button onClick={() => setVistaActual('formulario')} className="menu-boton">Agregar Nuevo Producto</button>
+        <button onClick={() => setVistaActual('productos')} className="menu-boton">Ver Inventario</button>
+        <button onClick={() => setVistaActual('ventas')} className="menu-boton">Mis ventas</button>
+        <button onClick={() => { setTipoTabla('productos'); setVistaActual('tabla'); }} className="menu-boton">Tabla de Productos</button>
+        <button onClick={() => { setTipoTabla('ventas'); setVistaActual('tabla'); }} className="menu-boton">Tabla de Ventas</button>
+      </div>
+      <div className="contenido-principal">
+        {renderVista()}
+      </div>
     </div>
   );
 };

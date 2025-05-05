@@ -33,9 +33,7 @@ const Tabla = ({ tipo, onVolver }) => {
 
   return (
     <div className="tabla-container">
-      <button onClick={onVolver} className="boton-volver">
-        <i className="fas fa-arrow-left"></i> Volver al Menú
-      </button>
+     
       <h2 className="titulo-tabla">
         {tipo === 'productos' ? 'Tabla de Productos' : 'Tabla de Ventas'}
       </h2>
