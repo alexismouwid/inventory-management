@@ -11,7 +11,7 @@ const ListaVentas = ({ onVolver }) => {
   useEffect(() => {
     const obtenerVentas = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/ventas');
+        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/ventas');
         setVentas(response.data);
       } catch (err) {
         setError(err.message);
@@ -28,7 +28,7 @@ const ListaVentas = ({ onVolver }) => {
     if (!confirmacion) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/ventas/${id}`);
+      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/ventas/${id}`);
       setActualizar(!actualizar); // Vuelve a cargar las ventas
     } catch (err) {
       alert('Error al eliminar el registro de venta: ' + err.message);
@@ -57,11 +57,11 @@ const ListaVentas = ({ onVolver }) => {
           <div key={venta._id} className="tarjeta-venta">
             
             {/* Imagen de la venta */}
-            <img 
-              src={venta.imagenVenta ? `http://localhost:5000/api/ventas/${venta._id}/imagen` : '/path-to-default-image.jpg'} 
-              alt={venta.nombreProducto} 
-              className="imagen-venta"
-            />
+           <img 
+             src={venta.imagenVenta ? `https://back-inventory-mmanagement.onrender.com/api/ventas/${venta._id}/imagen` : '/path-to-default-image.jpg'} 
+             alt={venta.nombreProducto} 
+             className="imagen-venta"
+/>
            
             <div className="cuerpo-tarjeta">
               <h3>{venta.nombreProducto}</h3>
@@ -73,7 +73,7 @@ const ListaVentas = ({ onVolver }) => {
                 <p className={`estado-pago ${venta.pagado ? 'pagado' : 'pendiente'}`}>
                   {venta.pagado ? 'Pagado' : 'Pendiente de pago'}
                 </p>
-                <p><small>Fecha: {new Date(venta.createdAt).toLocaleString()}</small></p>
+                <p><small>Fecha:{new Date(venta.fechaVenta).toLocaleDateString()}</small></p>
                 <button 
                   onClick={() => eliminarVenta(venta._id)}
                   className="boton-eliminar"

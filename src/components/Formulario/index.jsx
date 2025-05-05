@@ -60,10 +60,10 @@ const FormularioProducto = () => {
       formData.append('fechaCompra', fechaCompra);
       formData.append('imagen', imagen);
 
-      await axios.post('http://localhost:5000/api/subir', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
+     await axios.post('https://back-inventory-mmanagement.onrender.com/api/productos/subir', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' }
+});
+ 
       setMensaje('✅ Producto agregado correctamente');
       setNombre('');
       setPrecio('');

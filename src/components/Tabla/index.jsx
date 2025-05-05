@@ -12,8 +12,8 @@ const Tabla = ({ tipo, onVolver }) => {
     const obtenerDatos = async () => {
       try {
         const endpoint = tipo === 'productos'
-          ? 'http://localhost:5000/api/productos'
-          : 'http://localhost:5000/api/ventas';
+          ? 'https://back-inventory-mmanagement.onrender.com/api/productos'
+          : 'https://back-inventory-mmanagement.onrender.com/api/ventas';
 
         const response = await axios.get(endpoint);
         setDatos(response.data);

@@ -6,10 +6,9 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
   const [formData, setFormData] = useState({
     cantidad: 1,
     nombreCliente: '',
-    precioVenta: producto.precioVenta,
-    pagado: true,
-
+    pagado: true
   });
+
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
 
@@ -32,16 +31,12 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
         throw new Error('Cantidad no válida');
       }
 
-      const formDataToSend = new FormData();
-      formDataToSend.append('productoId', producto._id);
-      formDataToSend.append('cantidadVendida', cantidad);
-      formDataToSend.append('nombreCliente', formData.nombreCliente.trim());
-      formDataToSend.append('pagado', formData.pagado);
-      formDataToSend.append('imagenVenta', producto.imagenUrl);
-
-      // Enviar la venta al backend
-      await axios.post('http://localhost:5000/api/ventas', formDataToSend, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      // Enviar como JSON (no FormData)
+      await axios.post('https://back-inventory-mmanagement.onrender.com/api/ventas', {
+        productoId: producto._id,
+        cantidadVendida: cantidad,
+        nombreCliente: formData.nombreCliente.trim(),
+        pagado: formData.pagado
       });
 
       setMensaje('✅ Venta registrada correctamente');

@@ -14,7 +14,7 @@ const ListaProductos = ({ onVolver }) => {
   useEffect(() => {
     const obtenerProductos = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/productos');
+        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/productos');
         setProductos(response.data);
       } catch (err) {
         setError(err.message || 'Error al cargar productos');
@@ -36,7 +36,7 @@ const ListaProductos = ({ onVolver }) => {
     if (!confirmacion) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/productos/${id}`);
+      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/productos/${id}`);
       setActualizar(prev => !prev); // Vuelve a cargar los productos
     } catch (err) {
       alert('Error al eliminar el producto: ' + err.message);
@@ -70,7 +70,7 @@ const ListaProductos = ({ onVolver }) => {
           <div key={producto._id} className="tarjeta-producto">
           
            <img 
-  src={`http://localhost:5000/api/productos/${producto._id}/imagen`} 
+  src={`https://back-inventory-mmanagement.onrender.com/api/productos/${producto._id}/imagen`} 
   alt={producto.nombre} 
   className="imagen-producto"
              onError={(e) => {
