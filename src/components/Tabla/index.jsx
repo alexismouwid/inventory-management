@@ -62,7 +62,7 @@ const Tabla = ({ tipo, onVolver }) => {
                     <td>${item.precioUnidad}</td>
                     <td>{item.cantidad}</td>
                     <td>${item.precioVenta.toFixed(1)}</td>
-                    <td> ${((item.precioVenta - item.precioUnidad) * item.cantidad).toFixed(1)}
+                    <td  className={(item.precioVenta ?? 0) >= (item.precioUnidad ?? 0) ? 'positiva' : 'negativa'}> ${((item.precioVenta - item.precioUnidad) * item.cantidad).toFixed(1)}
 </td>
                   </>
                 ) : (
