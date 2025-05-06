@@ -28,8 +28,8 @@ const Tabla = ({ tipo, onVolver }) => {
   }, [tipo]);
 
   const encabezados = tipo === 'productos'
-    ? ['Fecha de compra', 'Nombre', 'Precio', 'Cantidad', 'Precio Venta', 'Utilidad']
-    : ['Nombre','Fecha de venta', 'Comprador', 'Cantidad Vendida', 'Precio Unitario', 'Total Vendido'];
+    ? ['Fecha de compra', 'Nombre', 'Inversion', "Precio Unitario", 'Cantidad', 'Precio Venta', 'Utilidad']
+    : ['Fecha de venta', 'Nombre', 'Comprador', 'Cantidad Vendida', 'Precio Unitario', 'Total Vendido'];
 
   return (
     <div className="tabla-container">
@@ -59,14 +59,17 @@ const Tabla = ({ tipo, onVolver }) => {
                     <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                     <td>{item.nombre}</td>
                     <td>${item.precio.toFixed(1)}</td>
+                    <td>${item.precioUnidad}</td>
                     <td>{item.cantidad}</td>
                     <td>${item.precioVenta.toFixed(1)}</td>
-                    <td>${item.utilidad.toFixed(1)}</td>
+                    <td> ${((item.precioVenta - item.precioUnidad) * item.cantidad).toFixed(1)}
+</td>
                   </>
                 ) : (
                   <>
-                    <td>{item.nombreProducto}</td>
+
                     <td>{new Date(item.fechaVenta).toLocaleDateString()}</td>
+                    <td>{item.nombreProducto}</td>
                     <td>{item.nombreCliente}</td>
                     <td>{item.cantidadVendida}</td>
                     <td>${(item.precioVenta).toFixed(1)}</td>

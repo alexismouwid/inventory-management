@@ -83,13 +83,14 @@ const ListaProductos = ({ onVolver }) => {
               <div className="detalles-producto">
                 <p><span>Precio total:</span> ${producto.precio?.toFixed(2) ?? '0.00'}</p>
                  <p><span>Precio por unidad:</span> {producto.precioUnidad}</p>
+                <p><span>Precio de venta:</span> ${producto.precioVenta?.toFixed(1) ?? '0.00'}</p>
                 <p><span>Cantidad:</span> {producto.cantidad}</p>
-                <p><span>Inversion:</span> ${producto.precio?.toFixed(1) * producto.cantidad ?? '0.00'}</p>
+                <p><span>Inversion:</span> ${producto.precioUnidad?.toFixed(1) * producto.cantidad ?? '0.00'}</p>
                 <p className="utilidad">
                   <span>Utilidad:</span> 
                   <span 
-                    className={(producto.precioVenta ?? 0) >= (producto.precio ?? 0) ? 'positiva' : 'negativa'}>
-                    ${((producto.precioVenta - producto.precio) * producto.cantidad).toFixed(1)}
+                    className={(producto.precioVenta ?? 0) >= (producto.precioUnidad ?? 0) ? 'positiva' : 'negativa'}>
+                    ${((producto.precioVenta - producto.precioUnidad) * producto.cantidad).toFixed(1)}
                   </span>
                 </p>
               </div>
