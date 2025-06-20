@@ -30,6 +30,10 @@
   width: 100%;
   box-sizing: border-box;
 }
+.form-input:hover {
+  border-color: #ef5f01;
+  outline: none;
+}
 
 .form-input:focus {
   border-color: #ef5f01;

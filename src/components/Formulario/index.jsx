@@ -15,7 +15,8 @@ const FormularioProducto = () => {
   const [preview, setPreview] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+   const usuario = JSON.parse(localStorage.getItem('usuario'));
+ const token = localStorage.getItem('token');
   // Calcular automáticamente el precio por unidad
   useEffect(() => {
     if (precio && cantidad && Number(cantidad) > 0) {
@@ -25,8 +26,15 @@ const FormularioProducto = () => {
       setPrecioUnidad('');
     }
   }, [precio, cantidad]);
+useEffect(() => {
+  if (usuario) {
+    setMensaje(`⚠️  Ha iniciado sesión`);
+  }
+}, []);
 
   const handleChange = (e) => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    const token = localStorage.getItem('token');
     const { name, value, type, files } = e.target;
 
     if (type === 'file') {
@@ -72,10 +80,12 @@ const FormularioProducto = () => {
       formData.append('imagen', imagen);
 
       await axios.post(
-        'https://back-inventory-mmanagement.onrender.com/api/productos/subir',
+        'http://localhost:3000/api/productos/subir',
         formData,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { 'Content-Type': 'multipart/form-data' ,  
+                     'Authorization': `Bearer ${token}`},
+         
         }
       );
 
@@ -91,9 +101,14 @@ const FormularioProducto = () => {
       setImagen(null);
       setPreview('');
     } catch (error) {
-      console.error('Error al enviar:', error);
-      setMensaje('❌ Error al guardar producto');
-    } finally {
+  console.error('Error al enviar:', error);
+  if (error.response && error.response.status === 401) {
+    setMensaje('❌ No autorizado. Por favor inicia sesión de nuevo.');
+  } else {
+    setMensaje(`❌ Error al guardar producto: ${error.message}`);
+  }
+}
+ finally {
       setIsLoading(false);
     }
   };

@@ -11,10 +11,27 @@ const ListaProductos = ({ onVolver }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [actualizar, setActualizar] = useState(false);
 
+
+
+
+
+
+
   useEffect(() => {
+
+
     const obtenerProductos = async () => {
+const token = localStorage.getItem('token');
+
+  
       try {
-        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/productos');
+     console.log(`Token obtendido: ${token}`);
+        const response = await axios.get('http://localhost:3000/api/productos',  { 
+          headers: {
+           
+            'Authorization': `Bearer ${token}`
+          }
+        });
         setProductos(response.data);
       } catch (err) {
         setError(err.message || 'Error al cargar productos');
@@ -36,7 +53,10 @@ const ListaProductos = ({ onVolver }) => {
     if (!confirmacion) return;
 
     try {
-      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/productos/${id}`);
+      const token = localStorage.getItem('token');
+      await axios.delete(`http://localhost:3000/api/productos/${id}`, {
+  headers: { 'Authorization': `Bearer ${token}` }
+});
       setActualizar(prev => !prev); // Vuelve a cargar los productos
     } catch (err) {
       alert('Error al eliminar el producto: ' + err.message);
@@ -78,7 +98,7 @@ const ListaProductos = ({ onVolver }) => {
              }}
 />
            
-            <div className="cuerpo-tarjeta">
+            <div className="cuerpo-tarjeta-p">
               <h3>{producto.nombre}</h3>
               <div className="detalles-producto">
                 <p><span>Precio total:</span> ${producto.precio?.toFixed(2) ?? '0.00'}</p>

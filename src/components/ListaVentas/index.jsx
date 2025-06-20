@@ -9,20 +9,29 @@ const ListaVentas = ({ onVolver }) => {
   const [actualizar, setActualizar] = useState(false);
 
   useEffect(() => {
-    const obtenerVentas = async () => {
-      try {
-        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/ventas');
-        setVentas(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setCargando(false);
-      }
-    };
+  const obtenerVentas = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) throw new Error('No hay token disponible');
+      
+      const response = await axios.get('http://localhost:3000/api/ventas', {
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      setVentas(response.data);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+      console.error('Error al obtener ventas:', err);
+    } finally {
+      setCargando(false);
+    }
+  };
 
-    obtenerVentas();
-  }, [actualizar]);
-
+  obtenerVentas();
+}, [actualizar]);
   const eliminarVenta = async (id) => {
     const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar esta venta?');
     if (!confirmacion) return;

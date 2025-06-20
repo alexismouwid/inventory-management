@@ -30,13 +30,18 @@ const ModalVenta = ({ producto, onClose, onVentaExitosa }) => {
       if (cantidad <= 0 || cantidad > producto.cantidad) {
         throw new Error('Cantidad no válida');
       }
-
+      const token = localStorage.getItem('token');
       // Enviar como JSON (no FormData)
-      await axios.post('https://back-inventory-mmanagement.onrender.com/api/ventas', {
+      await axios.post('http://localhost:3000/api/ventas',{
         productoId: producto._id,
         cantidadVendida: cantidad,
         nombreCliente: formData.nombreCliente.trim(),
         pagado: formData.pagado
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
       });
 
       setMensaje('✅ Venta registrada correctamente');

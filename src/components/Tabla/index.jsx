@@ -11,11 +11,17 @@ const Tabla = ({ tipo, onVolver }) => {
   useEffect(() => {
     const obtenerDatos = async () => {
       try {
+        const token = localStorage.getItem('token');
         const endpoint = tipo === 'productos'
-          ? 'https://back-inventory-mmanagement.onrender.com/api/productos'
-          : 'https://back-inventory-mmanagement.onrender.com/api/ventas';
+          ? 'http://localhost:3000/api/productos'
+          : 'http://localhost:3000/api/ventas';
 
-        const response = await axios.get(endpoint);
+        const response = await axios.get(endpoint, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
         setDatos(response.data);
       } catch (err) {
         setError(err.message);
