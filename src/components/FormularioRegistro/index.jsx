@@ -47,7 +47,7 @@ class FormularioRegistro extends Component {
               type="text"
               name="nombre"
               placeholder="Nombre"
-              className="input"
+              className="input-personalizado"
               value={this.state.nombre}
               onChange={this.handleChange}
               required
@@ -56,7 +56,7 @@ class FormularioRegistro extends Component {
               type="email"
               name="email"
               placeholder="Correo Electrónico"
-              className="input"
+              className="input-personalizado"
               value={email}
               onChange={this.handleChange}
               required
@@ -65,7 +65,7 @@ class FormularioRegistro extends Component {
               type="password"
               name="password"
               placeholder="Contraseña"
-              className="input"
+              className="input-personalizado"
               value={password}
               onChange={this.handleChange}
               required

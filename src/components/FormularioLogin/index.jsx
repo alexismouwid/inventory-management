@@ -62,7 +62,7 @@ const { toggleRegistro } = this.props;
               type="email"
               name="email"
               placeholder="Correo"
-              className="input"
+              className="input-personalizado"
               value={this.state.email}
               onChange={this.handleChange}
               required
@@ -71,7 +71,7 @@ const { toggleRegistro } = this.props;
               type="password"
               name="password"
               placeholder="Contraseña"
-              className="input"
+              className="input-personalizado"
               value={this.state.password}
               onChange={this.handleChange}
               required

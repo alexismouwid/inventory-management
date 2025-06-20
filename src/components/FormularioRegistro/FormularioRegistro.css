@@ -35,7 +35,7 @@ transform: translate(-50%, -50%);
 font-size: 16px;
  }
 
-.input {
+.input-personalizado {
 
  width: 100%; /* Que ocupen todo el ancho del formulario */
   font-size: clamp(14px, 1.5vw, 12px); /* Tamaño adaptable */
@@ -43,15 +43,16 @@ font-size: 16px;
 border-radius: clamp(5px, 1vw, 10px);
   border: 2px solid #ccc;
     margin-bottom: 10px;
-   background-color: #f8f8f8;
+   background-color: #f4f4f4;
    color: black;
    position: relative;
    top: 1.6rem;
+   
 }
-.input:hover{
+.input-personalizado:hover{
   border: 2px solid  #ff9333;
 }
-.input:active{
+.input-personalizado:active{
   border: 2px solid  #ff9333;
 }
 
