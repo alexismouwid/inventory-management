@@ -13,8 +13,8 @@ const Tabla = ({ tipo, onVolver }) => {
       try {
         const token = localStorage.getItem('token');
         const endpoint = tipo === 'productos'
-          ? 'http://localhost:3000/api/productos'
-          : 'http://localhost:3000/api/ventas';
+          ? 'https://back-inventory-mmanagement.onrender.com/api/productos'
+          : 'https://back-inventory-mmanagement.onrender.com/api/ventas';
 
         const response = await axios.get(endpoint, {
           headers: {

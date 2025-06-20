@@ -19,7 +19,7 @@ class FormularioRegistro extends Component {
     const { nombre, email, password } = this.state;
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/register", {
+      const response = await axios.post("https://back-inventory-mmanagement.onrender.com/api/auth/register", {
         nombre,
         email,
         password,

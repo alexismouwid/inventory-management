@@ -26,7 +26,7 @@ const token = localStorage.getItem('token');
   
       try {
      console.log(`Token obtendido: ${token}`);
-        const response = await axios.get('http://localhost:3000/api/productos',  { 
+        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/productos',  { 
           headers: {
            
             'Authorization': `Bearer ${token}`
@@ -54,7 +54,7 @@ const token = localStorage.getItem('token');
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/productos/${id}`, {
+      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/productos/${id}`, {
   headers: { 'Authorization': `Bearer ${token}` }
 });
       setActualizar(prev => !prev); // Vuelve a cargar los productos

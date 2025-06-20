@@ -80,7 +80,7 @@ useEffect(() => {
       formData.append('imagen', imagen);
 
       await axios.post(
-        'http://localhost:3000/api/productos/subir',
+        'https://back-inventory-mmanagement.onrender.com/api/productos/subir',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' ,  

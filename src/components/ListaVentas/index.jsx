@@ -14,7 +14,7 @@ const ListaVentas = ({ onVolver }) => {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No hay token disponible');
       
-      const response = await axios.get('http://localhost:3000/api/ventas', {
+      const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/ventas', {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

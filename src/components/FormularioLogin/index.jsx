@@ -20,7 +20,7 @@ class FormularioLogin extends Component {
     const { verificarSesion, toggleRegistro, setLogin, setRegistro} = this.props;
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/login", {
+      const response = await axios.post("https://back-inventory-mmanagement.onrender.com/api/auth/login", {
         email,
         password,
       });
