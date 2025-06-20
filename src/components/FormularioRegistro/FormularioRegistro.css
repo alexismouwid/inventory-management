@@ -1,3 +1,31 @@
+/* En tu FormularioRegistro.css */
+.registrar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.fa-spinner {
+  margin-right: 8px;
+}
+
+.success-message {
+  color: #2ecc71;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.error-message {
+  color: red;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 15px;
+}
+
 .formulario-container {
  
  color: white;

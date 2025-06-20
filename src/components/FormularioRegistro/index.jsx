@@ -8,35 +8,57 @@ class FormularioRegistro extends Component {
     email: "",
     password: "",
     error: "",
+    loading: false,
+    success: ""
   };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    const { nombre, email, password } = this.state;
+ handleSubmit = async (e) => {
+  e.preventDefault();
+  this.setState({ loading: true, error: "", success: "" }); // Resetear mensajes y activar loading
+  
+  const { nombre, email, password } = this.state;
+ const { toggleLogin  } = this.props;
 
-    try {
-      const response = await axios.post("https://back-inventory-mmanagement.onrender.com/api/auth/register", {
-        nombre,
-        email,
-        password,
+  try {
+    const response = await axios.post("https://back-inventory-mmanagement.onrender.com/api/auth/register", {
+      nombre,
+      email,
+      password,
+    });
+
+    // Guardar token en localStorage (asumiendo que el backend devuelve el token directamente)
+    localStorage.setItem("token", response.data.token);
+    
+    // Mostrar mensaje de éxito
+    this.setState({ 
+      success: `Registro exitoso. Bienvenido, ${nombre}!`,
+      loading: false
+    });
+    
+    // Opcional: Limpiar formulario después de 3 segundos
+    setTimeout(() => {
+      this.setState({ 
+        nombre: "",
+        email: "",
+        password: "",
+        success: ""
       });
+      toggleLogin();
+    }, 2000);
 
-      // Guardar token en localStorage
-      localStorage.setItem("token", response.data);
-
-      // Mostrar mensaje y cerrar el formulario
-      alert(`Registro exitoso. Bienvenido, ${response.data.nombre}!`);
-    } catch (error) {
-      this.setState({ error: "Error en el registro. Intenta de nuevo." });
-    }
-  };
-
+  } catch (error) {
+    this.setState({ 
+      error: error.response?.data?.message || "Error en el registro. Intenta de nuevo.",
+      loading: false
+    });
+  }
+};
   render() {
-    const { email, password, error } = this.state;
+    const { email, password, error, loading, success } = this.state;
     const { toggleLogin, setRegistro, setLogin } = this.props;
     return (
       <div className="formulario-container">
@@ -70,28 +92,35 @@ class FormularioRegistro extends Component {
               onChange={this.handleChange}
               required
             />
-            <div className="botones-container">
-              <button type="submit" className="registrar">
-              Registrarse
-            </button>
-            <button 
-                onClick={(e) => {
-                     e.preventDefault(); // evita que el formulario se envíe
-                         toggleLogin();
-                                    }}
+        <div className="botones-container">
+          <button 
+            type="submit" 
+            className="registrar"
+            disabled={loading} // Deshabilitar botón durante carga
+          >
+            {loading ? (
+              <>
+                <i className="fa fa-spinner fa-spin"></i> Procesando...
+              </>
+            ) : (
+              "Registrarse"
+            )}
+          </button>
+           <button 
+                  onClick={(e) => {
+                   e.preventDefault(); // evita que el formulario se envíe
+                      toggleLogin();
+                                          }}
                   className="login-button">
-                           Iniciar sesión
-                                  </button>
-
-           
-
-
-            </div> 
-                        {error && <p className="error-message">{error}</p>}
-          </form>
+                    Iniciar Sesión
+                  </button>  
+          {/* ... botón de login ... */}
+        </div>
         
-      </div>
-    );
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
+      </form>
+    </div>    );
   }
 }
 

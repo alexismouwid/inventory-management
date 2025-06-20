@@ -86,7 +86,13 @@ font-size: clamp(10px, 2vw, 12px); /* Tamaño de fuente adaptable */
   border: 1px solid #ff9333;
   box-shadow: 0 0 10px 1px #ff9333;
 }
+.entrar:disableb{
 
+  background-color:  #ff9333;
+  border: 1px solid #ff9333;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 .register-button{
   position: relative;
   top: 7px;
@@ -102,9 +108,42 @@ font-size: clamp(10px, 2vw, 12px); /* Tamaño de fuente adaptable */
   color: red;
   position: relative;
  bottom: 10px;
+ background-color: transparent;
  font-size: clamp(10px, 2vw, 12px);
 }
+/* Estilos para el estado de carga */
+.entrar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
+.fa-spinner {
+  margin-right: 8px;
+}
+
+/* Mensajes */
+.error-message {
+  color: #e74c3c;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.success-message {
+  color: #2ecc71;
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Asegura que los botones mantengan el estilo durante loading */
+.botones-container button[disabled] {
+  background-color: #cccccc !important;
+}
 
 
 
