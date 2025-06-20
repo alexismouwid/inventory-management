@@ -54,7 +54,7 @@ box-shadow: 0 0 10px 3px #ff9333; /* Sombra verde difuminada */
 }
 
 .bienvenida{
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
   position: relative;
   top: 15rem;
@@ -96,6 +96,14 @@ box-shadow: 0 0 10px 3px #ff9333; /* Sombra verde difuminada */
     border-radius: 0;
     border: none;
     padding: 15px;
+  }
+  .bienvenida{
+    font-size: 20px;
+    color: #f4f4f4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    top: 0rem;
+
   }
 }
 
