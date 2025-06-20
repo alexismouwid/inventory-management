@@ -115,10 +115,11 @@ font-size: clamp(10px, 2vw, 12px); /* Tamaño de fuente adaptable */
 @media (max-width: 768px)  {
 
 .formulario-register{
-  position: relative;
-  right: 0;
-  height: 160px;
-  
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 280px;
+    
   }
 
 
