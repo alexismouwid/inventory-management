@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ModalVenta from '../ModalVenta';
 import './ListaProductos.css';
+import  { useDelayedLoading } from '../../utils/useDelayedLoading';
 
 const ListaProductos = ({ onVolver }) => {
+
+
+
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +15,12 @@ const ListaProductos = ({ onVolver }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [actualizar, setActualizar] = useState(false);
   const [imagenes, setImagenes] = useState({});
+  const [imagenCargadas, setImagenCargadas] = useState(false);
   const token = localStorage.getItem('token');
+
+  
+  const loading = useDelayedLoading(1200);
+
 
   useEffect(() => {
 
@@ -67,9 +76,15 @@ const obtenerImagenProducto = async (id, token) => {
       }
 
       setImagenes(nuevasImagenes);
+      setImagenCargadas(true);
     };
 
-    cargarImagenes();
+
+   if (productos.length > 0) {
+     cargarImagenes();
+   } else {
+     setImagenCargadas(true);
+   }
   }, [productos, token]);
 
 
@@ -95,7 +110,13 @@ const obtenerImagenProducto = async (id, token) => {
     }
   };
 
-  if (cargando) return (
+
+ if(loading) {
+    return (
+<div className="loading-bar">Loading</div>
+   ); 
+  }  
+  return (
     <div className="lista-container">
      
       <div className="cargando">Cargando productos...</div>
