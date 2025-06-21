@@ -107,7 +107,7 @@ const { toggleRegistro } = this.props;
               toggleRegistro();
             }}
             className="register-button"
-            disabled={loading} // También deshabilitar durante carga
+            // También deshabilitar durante carga
           >
             Registrarse
           </button>            
