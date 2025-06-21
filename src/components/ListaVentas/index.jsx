@@ -7,14 +7,15 @@ const ListaVentas = ({ onVolver }) => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [actualizar, setActualizar] = useState(false);
+  const [imagenes, setImagenes] = useState({});
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
   const obtenerVentas = async () => {
     try {
-      const token = localStorage.getItem('token');
       if (!token) throw new Error('No hay token disponible');
       
-      const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/ventas', {
+      const response = await axios.get('https://back-inventory-render.onrender.com/api/ventas', {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -32,12 +33,56 @@ const ListaVentas = ({ onVolver }) => {
 
   obtenerVentas();
 }, [actualizar]);
+
+//Obtener imagen
+const obtenerImagenVenta = async (id, token) => {
+  const response = await axios.get(
+    `https://back-inventory-render.onrender.com/api/ventas/${id}/imagen`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: 'blob', // Importante para imágenes
+    }
+  );
+
+  const imagenUrl = URL.createObjectURL(response.data);
+  return imagenUrl;
+};
+
+
+useEffect(() => {
+  const cargarImagenes = async () => {
+    const nuevasImagenes = {};
+
+    for (const venta of ventas) {
+      try {
+        const url = await obtenerImagenVenta(venta._id, token);
+        console.log('✅ Imagen cargada para', venta._id, url);
+        nuevasImagenes[venta._id] = url;
+      } catch (error) {
+        console.error('❌ Error al cargar imagen de', venta.nombreProducto || venta._id, error.message);
+      }
+    }
+
+    setImagenes(nuevasImagenes);
+  };
+
+  cargarImagenes();
+}, [ventas, token]);
+
+useEffect(() => {
+  return () => {
+    Object.values(imagenes).forEach((url) => URL.revokeObjectURL(url));
+  };
+}, [imagenes]);
+
   const eliminarVenta = async (id) => {
     const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar esta venta?');
     if (!confirmacion) return;
 
     try {
-      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/ventas/${id}`);
+      await axios.delete(`https://back-inventory-render.onrender.com/api/ventas/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}`, }
+      });
       setActualizar(!actualizar); // Vuelve a cargar las ventas
     } catch (err) {
       alert('Error al eliminar el registro de venta: ' + err.message);
@@ -65,13 +110,16 @@ const ListaVentas = ({ onVolver }) => {
         {ventas.map((venta) => (
           <div key={venta._id} className="tarjeta-venta">
             
-            {/* Imagen de la venta */}
-           <img 
-             src={venta.imagenVenta ? `https://back-inventory-mmanagement.onrender.com/api/ventas/${venta._id}/imagen` : '/path-to-default-image.jpg'} 
-             alt={venta.nombreProducto} 
-             className="imagen-venta"
-/>
-           
+          {imagenes[venta._id] ? (
+  <img
+    src={imagenes[venta._id]}
+    alt={venta.nombreProducto}
+    className="imagen-venta"
+  />
+) : (
+  <div className="placeholder-imagen">Sin imagen</div>
+)}
+
             <div className="cuerpo-tarjeta">
               <h3>{venta.nombreProducto}</h3>
               <div className="detalles-venta">

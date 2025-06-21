@@ -10,12 +10,8 @@ const ListaProductos = ({ onVolver }) => {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [actualizar, setActualizar] = useState(false);
-
-
-
-
-
-
+  const [imagenes, setImagenes] = useState({});
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
 
@@ -26,7 +22,7 @@ const token = localStorage.getItem('token');
   
       try {
      console.log(`Token obtendido: ${token}`);
-        const response = await axios.get('https://back-inventory-mmanagement.onrender.com/api/productos',  { 
+        const response = await axios.get('https://back-inventory-render.onrender.com/api/productos',  { 
           headers: {
            
             'Authorization': `Bearer ${token}`
@@ -43,10 +39,46 @@ const token = localStorage.getItem('token');
     obtenerProductos();
   }, [actualizar]);
 
+  //Obtener imagen
+const obtenerImagenProducto = async (id, token) => {
+  const response = await axios.get(
+    `https://back-inventory-render.onrender.com/api/productos/${id}/imagen`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: 'blob', // Importante para imágenes
+    }
+  );
+
+  const imagenUrl = URL.createObjectURL(response.data);
+  return imagenUrl;
+};
+
+ useEffect(() => {
+    const cargarImagenes = async () => {
+      const nuevasImagenes = {};
+
+      for (const producto of productos) {
+        try {
+          const url = await obtenerImagenProducto(producto._id, token);
+          nuevasImagenes[producto._id] = url;
+        } catch (error) {
+          console.error('Error al cargar imagen de', producto.nombre);
+        }
+      }
+
+      setImagenes(nuevasImagenes);
+    };
+
+    cargarImagenes();
+  }, [productos, token]);
+
+
   const abrirModalVenta = (producto) => {
     setProductoSeleccionado(producto);
     setMostrarModal(true);
   };
+
+//Eliminar producto
 
   const eliminarProducto = async (id) => {
     const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar este producto?');
@@ -54,7 +86,7 @@ const token = localStorage.getItem('token');
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`https://back-inventory-mmanagement.onrender.com/api/productos/${id}`, {
+      await axios.delete(`https://back-inventory-render.onrender.com/api/productos/${id}`, {
   headers: { 'Authorization': `Bearer ${token}` }
 });
       setActualizar(prev => !prev); // Vuelve a cargar los productos
@@ -89,14 +121,15 @@ const token = localStorage.getItem('token');
         {productos.map((producto) => (
           <div key={producto._id} className="tarjeta-producto">
           
-           <img 
-  src={`https://back-inventory-mmanagement.onrender.com/api/productos/${producto._id}/imagen`} 
-  alt={producto.nombre} 
-  className="imagen-producto"
-             onError={(e) => {
-               e.target.style.display = 'none';
-             }}
-/>
+           {imagenes[producto._id] ? (
+            <img
+              src={imagenes[producto._id]}
+              alt={producto.nombre}
+              className="imagen-producto"
+            />
+          ) : (
+            <p>Cargando imagen...</p>
+          )}
            
             <div className="cuerpo-tarjeta-p">
               <h3>{producto.nombre}</h3>

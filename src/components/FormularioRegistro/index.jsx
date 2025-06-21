@@ -24,7 +24,7 @@ class FormularioRegistro extends Component {
  const { toggleLogin  } = this.props;
 
   try {
-    const response = await axios.post("https://back-inventory-mmanagement.onrender.com/api/auth/register", {
+    const response = await axios.post("https://back-inventory-render.onrender.com/api/auth/register", {
       nombre,
       email,
       password,

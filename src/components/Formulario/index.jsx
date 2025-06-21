@@ -78,9 +78,8 @@ useEffect(() => {
       formData.append('precioVenta', precioVenta);
       formData.append('fechaCompra', fechaCompra);
       formData.append('imagen', imagen);
-
       await axios.post(
-        'https://back-inventory-mmanagement.onrender.com/api/productos/subir',
+        'https://back-inventory-render.onrender.com/api/productos/subir',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' ,  
