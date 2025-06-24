@@ -1,3 +1,63 @@
+.loading-bar {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 110px;
+  background: transparent;
+  border: 0 solid #A4F522;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 111px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: #ff9333;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px #fff000;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.loading-bar:before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid transparent;
+  border-top: 5px solid #ff9333;
+  border-right: 5px solid #ff9333;
+  border-radius: 50%;
+  animation: animateC 2s linear infinite;
+}
+
+@keyframes animateC {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(405deg);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
 .lista-container {
   margin: 0 auto;
   padding: 2rem;
@@ -34,7 +94,7 @@
   font-size: 1rem;
 }
 
-.grid-tarjetas {
+.grid-productos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1.5rem;
@@ -157,111 +217,31 @@
 
 .boton-eliminar:hover {
   background-color: #c0392b;
-
-/* Loading spinner personalizado */
-.loading-bar {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 110px;
-  height: 110px;
-  background: transparent;
-  border: 0 solid #A4F522;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 111px;
-  font-family: sans-serif;
-  font-size: 15px;
-  color: #8CDA05;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  text-shadow: 0 0 20px #fff000;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
+@media (max-width: 768px) {
 
-.loading-bar:before {
-  content: "";
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  width: 100%;
-  height: 100%;
-  border: 3px solid transparent;
-  border-top: 5px solid #8CDA05;
-  border-right: 5px solid #8CDA05;
-  border-radius: 50%;
-  animation: animateC 2s linear infinite;
-}
+  .grid-productos{
 
-/* Animaciones */
-@keyframes animateC {
-  0% {
-    transform: rotate(0deg);
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes animate {
-  0% {
-    transform: rotate(45deg);
-  }
-  100% {
-    transform: rotate(405deg);
-  }
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Añade al final */
-@media (max-width: 900px) {
-  .grid-tarjetas {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-}
-@media (max-width: 768px)  {
-
-.formulario-login{
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 280px;
-    
+  .tarjeta-producto{
+    width: 100%;
   }
 
-
-}
-
-@media (max-width: 600px) {
-  .grid-tarjetas {
-     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  .imagen-producto{
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
   }
 
-  
-  .tarjeta-producto {
-    flex-direction: column;
+  .cuerpo-tarjeta-p{
+    width: 100%;
   }
-  
-  .imagen-producto {
-    height: 100px;
+
+  .detalles-producto p{
+    font-size: 0.7rem;
   }
-}
+ 
+ }
 
 
-.boton-eliminar {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  margin-top: 8px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.boton-eliminar:hover {
-  background-color: #c0392b;
-}

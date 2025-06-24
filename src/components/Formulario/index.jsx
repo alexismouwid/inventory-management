@@ -79,6 +79,7 @@ useEffect(() => {
       formData.append('fechaCompra', fechaCompra);
       formData.append('imagen', imagen);
       await axios.post(
+
         'https://back-inventory-render.onrender.com/api/productos/subir',
         formData,
         {
